@@ -1,0 +1,14 @@
+{
+  "name": "projectbackend",
+  "version": "1.0.0",
+  "description": "packages for backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rvce",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
