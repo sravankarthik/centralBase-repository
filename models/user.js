@@ -1,14 +1,23 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto")
 const Schema = mongoose.Schema;
-const uuidv1 = require("uuid/v1")
+const { v4: uuidv4 } = require('uuid');
+const { ObjectId } = Schema;
+
+
+const jobListSchema = new Schema({
+    job: {
+        type: ObjectId,
+        ref: "Job"
+    }
+});
+
+const JobList = mongoose.model("jobList", jobListSchema);
 
 let userSchema = new Schema({
-    userName: {
+    username: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
     },
     encry_password: {
         type: String,
@@ -18,13 +27,15 @@ let userSchema = new Schema({
     role: {
         type: Number,
         default: 0
-    }
+    },
+    jobsPending: [jobListSchema],
+    jobsComplete: [jobListSchema]
 }, { timestamps: true });
 
 userSchema.virtual("password")
     .set(function (password) {
         this._password = password;
-        this.salt = uuidv1();
+        this.salt = uuidv4();
         this.encry_password = this.secretPassword(password);
     })
     .get(function () {
@@ -49,4 +60,6 @@ userSchema.methods = {
     }
 };
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = { User, JobList };
