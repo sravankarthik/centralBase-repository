@@ -6,9 +6,4 @@ router.post("/signup", signup);
 router.get("/signout", signout);
 router.post("/signin", signin);
 
-router.get("/test", isSignedIn, (req, res) => {
-    res.send("done");
-})
-
-
 module.exports = router;

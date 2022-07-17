@@ -11,9 +11,11 @@ app.use(cookieParser());
 app.use(cors());
 
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 
 //Routes
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 
 
