@@ -4,12 +4,42 @@ const Schema = mongoose.Schema;
 const { v4: uuidv4 } = require('uuid');
 const { ObjectId } = Schema;
 
+const commentSchema = new Schema({
+    user: {
+        type: ObjectId,
+        ref: "User"
+    },
+    comment: {
+        type: String
+    },
+    time: {
+        type: Date
+    }
+});
+
+const Comment = mongoose.model("Comment", commentSchema);
 
 const jobListSchema = new Schema({
     job: {
         type: ObjectId,
         ref: "Job"
-    }
+    },
+    status: {
+        type: String,
+        enum: ["cancelled", "ongoing", "completed"]
+    },
+    // stage: {
+    //     type: Number,
+    //     default: 0
+    // },
+    checkboxes: [{
+        type: Boolean,
+        default: false
+    }],
+    comments: [{
+        type: ObjectId,
+        ref: "Comment"
+    }]
 });
 
 const JobList = mongoose.model("jobList", jobListSchema);
@@ -28,8 +58,13 @@ let userSchema = new Schema({
         type: Number,
         default: 0
     },
-    jobsPending: [jobListSchema],
-    jobsComplete: [jobListSchema]
+    sub_divisions: [{
+        type: String
+    }],
+    jobs: [{
+        type: ObjectId,
+        ref: "jobList"
+    }]
 }, { timestamps: true });
 
 userSchema.virtual("password")
@@ -62,4 +97,4 @@ userSchema.methods = {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = { User, JobList };
+module.exports = { User, JobList, Comment };
