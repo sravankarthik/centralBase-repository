@@ -12,16 +12,20 @@ app.use(cors());
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const jobRoutes = require("./routes/job");
+const assignmentRoutes = require("./routes/assignment");
 
 //Routes
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api", jobRoutes);
+app.use("/api", assignmentRoutes);
 
 
 
 //DB connection
 const port = 8000
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect('mongodb://localhost:27017/test1')
     .then(() => { console.log("DB connected...") });
 //Server connection
 app.listen(port, () => {

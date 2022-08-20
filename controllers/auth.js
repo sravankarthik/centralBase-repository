@@ -1,4 +1,4 @@
-const { User } = require("../models/user");
+const User = require("../models/user");
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 
@@ -14,6 +14,7 @@ exports.signup = (req, res) => {
     const user = new User(req.body);
     console.log(user);
     user.save((err, user) => {
+        console.log(err);
         if (err) {
             return res.status(400).json({
                 err: "not able to save user in DB"
@@ -59,7 +60,8 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-    if (req.profile.role === 0) {
+    console.log(req.profile);
+    if (req.profile.role != 0) {
         return res.status(403).json({
             error: "you are not admin"
         })

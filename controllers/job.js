@@ -8,11 +8,13 @@ exports.getJobById = (req, res, next, id) => {
             })
         }
         req.info = job;
+        console.log(req.info);
         next();
     })
 }
 
 exports.createJob = (req, res) => {
+    console.log("hi");
     const job = new Job(req.body);
     job.save((err, job) => {
         if (err) {

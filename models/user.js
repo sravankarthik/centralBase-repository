@@ -4,46 +4,6 @@ const Schema = mongoose.Schema;
 const { v4: uuidv4 } = require('uuid');
 const { ObjectId } = Schema;
 
-const commentSchema = new Schema({
-    user: {
-        type: ObjectId,
-        ref: "User"
-    },
-    comment: {
-        type: String
-    },
-    time: {
-        type: Date
-    }
-});
-
-const Comment = mongoose.model("Comment", commentSchema);
-
-const jobListSchema = new Schema({
-    job: {
-        type: ObjectId,
-        ref: "Job"
-    },
-    status: {
-        type: String,
-        enum: ["cancelled", "ongoing", "completed"]
-    },
-    // stage: {
-    //     type: Number,
-    //     default: 0
-    // },
-    checkboxes: [{
-        type: Boolean,
-        default: false
-    }],
-    comments: [{
-        type: ObjectId,
-        ref: "Comment"
-    }]
-});
-
-const JobList = mongoose.model("jobList", jobListSchema);
-
 let userSchema = new Schema({
     username: {
         type: String,
@@ -58,12 +18,12 @@ let userSchema = new Schema({
         type: Number,
         default: 0
     },
-    sub_divisions: [{
+    subdivisions: [{
         type: String
     }],
-    jobs: [{
+    assignments: [{
         type: ObjectId,
-        ref: "jobList"
+        ref: "Assignment"
     }]
 }, { timestamps: true });
 
@@ -95,6 +55,4 @@ userSchema.methods = {
     }
 };
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = { User, JobList, Comment };
+module.exports = mongoose.model("User", userSchema);

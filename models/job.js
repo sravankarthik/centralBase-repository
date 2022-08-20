@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const jobSchema = new mongoose.Schema({
-    jobId: {
+    job_id: {
         type: String,
         required: true,
         unique: true
@@ -10,9 +10,6 @@ const jobSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ["cancelled", "ongoing", "completed"]
-    },
-    new_comment: {
-        type: Boolean
     }
 
 }, { timestamps: true });
