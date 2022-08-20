@@ -7,6 +7,10 @@ const jobSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    assignments: [{
+        type: ObjectId,
+        ref: "Assignment"
+    }],
     status: {
         type: String,
         enum: ["cancelled", "ongoing", "completed"]

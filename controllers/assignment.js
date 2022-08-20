@@ -1,4 +1,6 @@
 const Assignment = require("../models/assignment");
+const User = require("../models/user");
+const Job = require("../models/job");
 
 exports.getAssignmentById = (req, res, next, id) => {
     Assignment.findById(id).exec((err, assignment) => {
@@ -24,6 +26,33 @@ exports.createAssignment = (req, res) => {
                 error: "Failed to save your assignment in db"
             })
         }
+        console.log(assignment.user);
+        User.findByIdAndUpdate(
+            { _id: assignment.user._id },
+            { $push: { assignments: assignment } },
+            { new: true, useFindAndModify: false },
+            (err, assignment) => {
+                if (err || !assignment) {
+                    return res.status(400).json({
+                        error: "user was not able to update"
+                    })
+                }
+                console.log("done");
+            }
+        )
+        Job.findByIdAndUpdate(
+            { _id: assignment.job._id },
+            { $push: { assignments: assignment } },
+            { new: true, useFindAndModify: false },
+            (err, assignment) => {
+                if (err || !assignment) {
+                    return res.status(400).json({
+                        error: "user was not able to update"
+                    })
+                }
+                console.log("done");
+            }
+        )
         res.json(assignment);
     })
 }
