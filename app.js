@@ -4,9 +4,17 @@ const bodyParser = require('body-parser')
 const app = express()
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
+const crypto = require("crypto");
+const mongoose = require("mongoose");
+const multer = require("multer");
+const GridFsStrorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
+const methodOverride = require("method-override");
 
 //Middlewares
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(cors());
 
