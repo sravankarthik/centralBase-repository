@@ -1,20 +1,20 @@
 const express = require("express");
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
-const app = express()
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const {GridFsStorage} = require("multer-gridfs-storage");
+const GridFsStrorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
 const methodOverride = require("method-override");
 
 //Middlewares
 app.use(bodyParser.json());
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(cors());
 
@@ -24,7 +24,7 @@ const jobRoutes = require("./routes/job");
 const assignmentRoutes = require("./routes/assignment");
 
 //file uploads.
-const mongoULI = 'mongodb://localhost:27017/test1';
+const mongoULI = "mongodb://localhost:27017/test1";
 const conn = mongoose.createConnection(mongoURI);
 let gfs;
 conn.once("open", () => {
@@ -32,7 +32,6 @@ conn.once("open", () => {
   //collection name
   gfs.collection("uploads");
 });
-
 
 const storage = new GridFsStrorage({
   url: mongoURI,
@@ -45,7 +44,7 @@ const storage = new GridFsStrorage({
         const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-            //collection name to be specified in bucketName
+          //collection name to be specified in bucketName
           bucketName: "uploads",
         };
         resolve(fileInfo);
@@ -56,10 +55,9 @@ const storage = new GridFsStrorage({
 const upload = multer({ storage });
 
 app.post("/upload", upload.single("file"), (req, res) => {
-    //to me modified later. This is for single file.
+  //to me modified later. This is for single file.
   res.json({ file: req.file });
 });
-
 
 //Routes
 app.use("/api", authRoutes);
@@ -67,13 +65,14 @@ app.use("/api", userRoutes);
 app.use("/api", jobRoutes);
 app.use("/api", assignmentRoutes);
 
-
-
 //DB connection
-const port = 8000
-mongoose.connect('mongodb://localhost:27017/test1')
-    .then(() => { console.log("DB connected...") });
+const port = 8000;
+mongoose.connect("mongodb://localhost:27017/test1").then(() => {
+  console.log("DB connected...");
+});
 //Server connection
 app.listen(port, () => {
-    console.log(`app listening on port ${port}`)
-})
+  console.log(`app listening on port ${port}`);
+});
+
+//hello world.
