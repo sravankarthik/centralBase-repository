@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const crypto = require("crypto");
-const mongoose = require("mongoose");
 const multer = require("multer");
 const GridFsStrorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
@@ -24,7 +23,7 @@ const jobRoutes = require("./routes/job");
 const assignmentRoutes = require("./routes/assignment");
 
 //file uploads.
-const mongoULI = "mongodb://localhost:27017/test1";
+const mongoURI = "mongodb://localhost:27017/test1";
 const conn = mongoose.createConnection(mongoURI);
 let gfs;
 conn.once("open", () => {
